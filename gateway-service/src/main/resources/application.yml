@@ -1,0 +1,63 @@
+spring:
+   application:
+      name: gateway-service
+
+   cloud:
+      gateway:
+         discovery:
+            locator:
+               enabled: true
+         routes:
+         
+            - id: auth-service
+              uri: lb://auth-service
+              predicates:
+              - Path=/auth-api/**
+              
+            - id: master-service
+              uri: lb://master-service
+              predicates:
+              - Path=/masters/**
+              
+            - id: customer-service
+              uri: lb://customer-service
+              predicates:
+              - Path=/customers/**
+              
+            - id: product-service
+              uri: lb://product-service
+              predicates:
+              - Path=/products/**
+            
+            - id: invoice-service
+              uri: lb://invoice-service
+              predicates:
+              - Path=/invoices/**
+              
+            - id: report-service
+              uri: lb://report-service
+              predicates:
+              - Path=/reports/**
+           
+server:
+   port: 9191
+   
+eureka:
+  client:
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+      
+instance:
+    hostname: localhost
+
+management:
+   endpoint:
+      gateway:
+         enabled: true
+   endpoints:
+      web:
+         exposure:
+            include: gateway

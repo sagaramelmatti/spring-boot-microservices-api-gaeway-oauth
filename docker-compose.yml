@@ -1,0 +1,12 @@
+version: '3'
+services:
+  eureka-service:
+    image: eureka-service
+    ports:
+     - "8761:8761"
+  gateway-service:
+    image: gateway-service
+    depends_on:
+     - eureka-service
+    ports:
+     - "9191:9191"
